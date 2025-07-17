@@ -3,7 +3,7 @@
 client_id = "e5864ffe6387b01a9df5ea5a06edba4a"
 name = "shopin"
 handle = "shopin-8"
-application_url = "https://gps-visits-nissan-herbs.trycloudflare.com"
+application_url = "https://wit-spelling-conspiracy-advisory.trycloudflare.com"
 embedded = true
 
 [build]
@@ -26,7 +26,7 @@ api_version = "2025-07"
 scopes = "write_products"
 
 [auth]
-redirect_urls = ["https://gps-visits-nissan-herbs.trycloudflare.com/auth/callback", "https://gps-visits-nissan-herbs.trycloudflare.com/auth/shopify/callback", "https://gps-visits-nissan-herbs.trycloudflare.com/api/auth/callback"]
+redirect_urls = ["https://wit-spelling-conspiracy-advisory.trycloudflare.com/auth/callback", "https://wit-spelling-conspiracy-advisory.trycloudflare.com/auth/shopify/callback", "https://wit-spelling-conspiracy-advisory.trycloudflare.com/api/auth/callback"]
 
 [pos]
 embedded = false

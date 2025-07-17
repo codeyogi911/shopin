@@ -1,13 +1,13 @@
-import prisma from "../db.server";
+import db from "../db.server";
 
 export async function getAppSettings(shop: string) {
-  let settings = await prisma.appSettings.findUnique({
+  let settings = await db.appSettings.findUnique({
     where: { shop }
   });
 
   // If no settings exist, create default ones
   if (!settings) {
-    settings = await prisma.appSettings.create({
+    settings = await db.appSettings.create({
       data: {
         shop,
         stockCoverageDays: 30,

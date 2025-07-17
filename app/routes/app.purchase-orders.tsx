@@ -22,7 +22,7 @@ import {
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { authenticate } from "../shopify.server";
-import prisma from "../db.server";
+import db from "../db.server";
 import { getAppSettings, getStockStatus, calculateSuggestedQuantity } from "../lib/settings.server";
 
 // Types for our data
@@ -37,16 +37,6 @@ interface ProductData {
   selected: boolean;
   orderQuantity: number;
   stockStatus: 'low' | 'medium' | 'good';
-}
-
-interface PurchaseOrder {
-  id: string;
-  vendor: string;
-  status: 'draft' | 'sent' | 'received' | 'cancelled';
-  totalItems: number;
-  totalValue: number;
-  createdAt: string;
-  expectedDelivery?: string;
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -215,7 +205,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     });
     
     // Fetch purchase orders from database
-    const purchaseOrders = await prisma.purchaseOrder.findMany({
+    const purchaseOrders = await db.purchaseOrder.findMany({
       where: {
         shop: session.shop
       },
@@ -278,7 +268,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       const totalItems = products.reduce((sum: number, p: any) => sum + p.quantity, 0);
       
       // Create purchase order in database
-      const purchaseOrder = await prisma.purchaseOrder.create({
+      const purchaseOrder = await db.purchaseOrder.create({
         data: {
           shop: session.shop,
           vendor,

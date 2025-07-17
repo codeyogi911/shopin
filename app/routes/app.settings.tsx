@@ -21,7 +21,7 @@ import {
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { authenticate } from "../shopify.server";
-import prisma from "../db.server";
+import db from "../db.server";
 
 // Types for our data
 interface AppSettings {
@@ -43,13 +43,13 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   
   try {
     // Get or create app settings for this shop
-    let settings = await prisma.appSettings.findUnique({
+    let settings = await db.appSettings.findUnique({
       where: { shop: session.shop }
     });
     
     // If no settings exist, create default ones
     if (!settings) {
-      settings = await prisma.appSettings.create({
+      settings = await db.appSettings.create({
         data: {
           shop: session.shop,
           stockCoverageDays: 30,
@@ -138,7 +138,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       }
       
       // Update settings in database
-      await prisma.appSettings.upsert({
+      await db.appSettings.upsert({
         where: { shop: session.shop },
         update: {
           stockCoverageDays,
