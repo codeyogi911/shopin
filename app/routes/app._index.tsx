@@ -1,6 +1,5 @@
 import { useState } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import {
   Page,
@@ -262,16 +261,16 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       storeHealth
     };
     
-    return json({
+    return {
       inventory: combinedData,
       summary,
       error: null
-    });
+    };
     
   } catch (error) {
     console.error('Error fetching inventory data:', error);
     
-    return json({
+    return {
       inventory: [],
       summary: {
         totalProducts: 0,
@@ -283,7 +282,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         storeHealth: 'critical' as const
       },
       error: `Failed to load inventory data: ${error instanceof Error ? error.message : 'Unknown error'}`
-    });
+    };
   }
 };
 
@@ -295,10 +294,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const action = formData.get('action');
   
   if (action === 'refresh') {
-    return json({ success: true });
+    return { success: true };
   }
   
-  return json({ success: false });
+  return { success: false };
 };
 
 export default function Dashboard() {
